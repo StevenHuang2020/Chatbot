@@ -12,79 +12,79 @@ import speech_recognition as sr
 from chatbot import createBot,getResponse
 
 def speak(text):
-	engine = pyttsx3.init()
-	engine.setProperty('rate',150)
-	engine.setProperty('voice','en+m7')
-	engine.say(text)
-	engine.runAndWait()	
+    engine = pyttsx3.init()
+    engine.setProperty('rate',150)
+    engine.setProperty('voice','en+m7')
+    engine.say(text)
+    engine.runAndWait()	
 
 def get_voice():
-	r=sr.Recognizer()
-	print("Listening.....")
-	with sr.Microphone() as source:
-		audio = r.listen(source)
-		said=""
-		#print("loading.....")
-		try:
-			said = r.recognize_google(audio)
-		except:
-			pass
-	
-	return said.lower()
+    r=sr.Recognizer()
+    print("Listening.....")
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+        said=""
+        #print("loading.....")
+        try:
+            said = r.recognize_google(audio)
+        except:
+            pass
+    
+    return said.lower()
 
 def get_data(text):
-	text = text.lower()	
-	for word in text.split():
-		#print(word)
-  		pass
-	print('Get your voice:',text)
+    text = text.lower()	
+    for word in text.split():
+        #print(word)
+        pass
+    print('Get your voice:',text)
 
 def mainloop(BYE):
-	while True:
-		text = get_voice()
-		if text != '':
-			print('your said:',text)
-			speak(text)
+    while True:
+        text = get_voice()
+        if text != '':
+            print('your said:',text)
+            speak(text)
 
-			if text.count(BYE) > 0:
-				break
-		else:
-			continue
+            if text.count(BYE) > 0:
+                break
+        else:
+            continue
 
 def mainloopBot(BYE,chatbot):
-	while True:
-		text = get_voice()
+    while True:
+        text = get_voice()
 
-		if text != '':
-			if text.count(BYE) > 0:
-				break
+        if text != '':
+            if text.count(BYE) > 0:
+                break
 
-			print('your said:',text)
-			response = chatbot.get_response(text)
-			print('response:',response)
-			speak(response)
-		else:
-			continue
+            print('your said:',text)
+            response = chatbot.get_response(text)
+            print('response:',response)
+            speak(response)
+        else:
+            continue
   
 def main():
-	chatbot = createBot()
+    chatbot = createBot()
 
-	speak("Hi, I am your voice assistant. Made by StevenHuang")
-	speak("Please say 'Hello' to wake me up")
-	speak("Please say 'Goodbye' to make me sleep")
+    speak("Hi, I am your voice assistant. Made by StevenHuang")
+    speak("Please say 'Hello' to wake me up")
+    speak("Please say 'Goodbye' to make me sleep")
 
-	WAKE = "hello"
-	BYE = "bye"
+    WAKE = "hello"
+    BYE = "bye"
 
-	text = get_voice()
-	if text.count(WAKE) > 0:
-		speak("I am ready")
-		#mainloop(BYE)
-		mainloopBot(BYE,chatbot)
-	else:
-		speak(text)
-	
-	speak("Good bye!")
+    text = get_voice()
+    if text.count(WAKE) > 0:
+        speak("I am ready")
+        #mainloop(BYE)
+        mainloopBot(BYE,chatbot)
+    else:
+        speak(text)
+    
+    speak("Good bye!")
  
 if __name__=='__main__':
     main()
